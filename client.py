@@ -4,8 +4,9 @@
 import socket
 
 s = socket.socket()
-#host = socket.gethostname()
-host = '192.168.137.3'
+
+#TODO Check validity of input (?)
+host = input('Enter the EV3\'s IP address: ')
 port = 1234
 
 s.connect((host, port))
