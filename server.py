@@ -4,9 +4,9 @@ import ev3dev.ev3 as ev3
 import time
 import socket
 
-print('Hello World!')
 s = socket.socket()
 host = socket.gethostname()
+print('EV3 IP address:', socket.gethostbyname(host))
 port = 1234
 s.bind((host, port))
 
