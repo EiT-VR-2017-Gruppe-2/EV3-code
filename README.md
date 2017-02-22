@@ -18,6 +18,14 @@ TBD
 
 ### Installation
 
+#### Setting up the EV3
+
+1. Download and flash the ev3dev OS for LEGO MINDSTORMS EV3 according to the official [Getting Started Guide](http://www.ev3dev.org/docs/getting-started/) (In this project, the ev3dev-jessie-2017-02-11 version was used). Make sure that the ev3dev OS is booted during startup.
+2. Follow the official [Connecting to the Internet Guide](http://www.ev3dev.org/docs/networking/). In this project, the [Connecting to the Internet via USB](http://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/) guide was followed to establish internet connection. Make sure that the EV3 has a dedicated IP-address after the configuration.
+3. Follow the official [Connecting to ev3dev Using SSH](http://www.ev3dev.org/docs/tutorials/connecting-to-ev3dev-with-ssh/) to configure connection to the EV3 via SSH.
+
+#### Configure the Software
+
 TBD
 
 ### Example
