@@ -6,9 +6,9 @@ The group project is part of the mandatory Master's course "Experts in Teamwork"
 
 ## TPG4850: VR-landsbyen 2017 - Group 2
 
-  - Anders Kruke
-  - Cecilie Teisberg
-  - Fredrik Bakken
+  - [Anders Kruke](https://github.com/andersmkruke)
+  - [Cecilie Teisberg]()
+  - [Fredrik Bakken](https://github.com/FredrikBakken)
 
 ## The Project
 
