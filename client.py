@@ -20,7 +20,7 @@ s = socket.socket()
 
 #TODO Check validity of input (?)
 while True:
-    host = raw_input("Enter the EV3\'s IP address: ")       # TODO: Check if raw_input works for the EV3
+    host = input("Enter the EV3\'s IP address: ")       # TODO: Check if raw_input works for the EV3
     if not validateIPv4(host):
         print("Invalid IPv4-address, please try again.")
     else:
@@ -30,13 +30,9 @@ port = 1234
 
 s.connect((host, port))
 print ((s.recv(1024)).decode('utf-8'))
-<<<<<<< HEAD
-s.close()
-=======
 while True:
     msg = input('Enter a command: ')
     if msg == '':
         break
     s.send(msg.encode('utf-8'))
 s.close()
->>>>>>> master
