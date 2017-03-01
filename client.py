@@ -30,4 +30,13 @@ port = 1234
 
 s.connect((host, port))
 print ((s.recv(1024)).decode('utf-8'))
+<<<<<<< HEAD
 s.close()
+=======
+while True:
+    msg = input('Enter a command: ')
+    if msg == '':
+        break
+    s.send(msg.encode('utf-8'))
+s.close()
+>>>>>>> master
