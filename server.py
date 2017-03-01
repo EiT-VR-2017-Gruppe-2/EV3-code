@@ -14,8 +14,11 @@ s.bind((host, port))
 s.listen(5)
 
 claw = ev3.MediumMotor('outA')
-left_motor = ev3.LargeMotor('outB')
-right_motor = ev3.LargeMotor('outC')
+l_motor = ev3.LargeMotor('outB')
+r_motor = ev3.LargeMotor('outC')
+
+lmax = l_motor.max_speed
+rmax = r_motor.max_speed
 
 #m.run_timed(time_sp=3000, speed_sp=500)
 
@@ -29,17 +32,17 @@ while True:
         if msg == '':
             break
         elif msg == 'fwd':
-            left_motor.run_forever(speed_sp=500)
-            right_motor.run_forever(speed_sp=500)
+            left_motor.run_forever(speed_sp=lmax)
+            right_motor.run_forever(speed_sp=rmax)
         elif msg == 'bwd':
-            left_motor.run_forever(speed_sp=-500)
-            right_motor.run_forever(speed_sp=-500)
+            left_motor.run_forever(speed_sp=-lmax)
+            right_motor.run_forever(speed_sp=-rmax)
         elif msg == 'left':
-            left_motor.run_forever(speed_sp=-500)
-            right_motor.run_forever(speed_sp=500)
+            left_motor.run_forever(speed_sp=-lmax)
+            right_motor.run_forever(speed_sp=rmax)
         elif msg == 'right':
-            left_motor.run_forever(speed_sp=500)
-            right_motor.run_forever(speed_sp=-500)
+            left_motor.run_forever(speed_sp=lmax)
+            right_motor.run_forever(speed_sp=-rmax)
         elif msg == 'stop':
             left_motor.stop()
             right_motor.stop()
