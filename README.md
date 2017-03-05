@@ -20,7 +20,7 @@ TBD
 
 #### Building the Robot
 
-The robot design built for the project is based on the [GRIPP3R-robot](https://www.lego.com/nb-no/mindstorms/build-a-robot/gripp3r) from LEGO MINDSTORMS. Download the manual and follow the instructions from page 1 to 57.
+The robot for the project is based on the [GRIPP3R-robot](https://www.lego.com/nb-no/mindstorms/build-a-robot/gripp3r) from LEGO MINDSTORMS. Download the manual and follow the instructions from page 1 to 57.
 
 #### Setting up the EV3
 
