@@ -18,6 +18,10 @@ TBD
 
 ### Installation
 
+#### Building the Robot
+
+The robot design built for the project is based on the [GRIPP3R-robot](https://www.lego.com/nb-no/mindstorms/build-a-robot/gripp3r) from LEGO MINDSTORMS. Download the manual and follow the instructions from page 1 to 57.
+
 #### Setting up the EV3
 
 1. Download and flash the ev3dev OS for LEGO MINDSTORMS EV3 according to the official [Getting Started Guide](http://www.ev3dev.org/docs/getting-started/) (In this project, the ev3dev-jessie-2017-02-11 version was used). Make sure that the ev3dev OS is booted during startup.
