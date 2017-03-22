@@ -63,7 +63,7 @@ while True:
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
 
-    #print(distance2)
+    print(distance2)
 
     event = openvr.VREvent_t()
     while(openvr.VRSystem().pollNextEvent(event)):
