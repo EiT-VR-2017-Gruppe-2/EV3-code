@@ -31,6 +31,8 @@ openvr.init(openvr.VRApplication_Scene)
 poses_t = openvr.TrackedDevicePose_t * openvr.k_unMaxTrackedDeviceCount
 poses = poses_t()
 
+
+
 openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
 yaw1 = (poses[0].mDeviceToAbsoluteTracking)[2][0]
 yaw2 = (poses[0].mDeviceToAbsoluteTracking)[2][2]
@@ -61,7 +63,14 @@ while True:
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
 
-    print(distance2)
+    #print(distance2)
+
+    event = openvr.VREvent_t()
+    while(openvr.VRSystem().pollNextEvent(event)):
+        t = event.eventType
+        if (t == openvr.VREvent_ButtonPress and event.data.controller.button == openvr.k_EButton_SteamVR_Trigger):
+            print(':D')
+            #TODO
     
     sys.stdout.flush()
     time.sleep(0.2)
