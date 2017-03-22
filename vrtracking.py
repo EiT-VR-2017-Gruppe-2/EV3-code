@@ -19,7 +19,7 @@ def GetOffsetYawValue(value, offset):
         v = 2+v
     elif v > 1:
         v = v-2
-    return v
+    return round(v, 2)
 
 def GetDistance(x1, y1, x2, y2):
     return math.sqrt((x1-x2)**2+(y1-y2)**2)
@@ -37,6 +37,7 @@ openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
 yaw1 = (poses[0].mDeviceToAbsoluteTracking)[2][0]
 yaw2 = (poses[0].mDeviceToAbsoluteTracking)[2][2]
 offset = GetYawValue(yaw1, yaw2)
+previous_view = offset
 
 while True:
     openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
@@ -49,8 +50,25 @@ while True:
     yaw_value = GetYawValue(yaw1,yaw2)
     #print(yaw_value)
     #print(GetOffsetYawValue(yaw_value, offset))
-    #print('')
 
+    current_view = GetOffsetYawValue(yaw_value, offset)
+
+    diff = ((current_view) - (previous_view))
+        
+    if ((diff < 0.05) and (diff > -0.05)):
+        print('Nothing')
+    else:
+        print('Changed')
+
+        if diff > 0.0:
+            print('Right')
+        else:
+            print('Left')
+        
+        previous_view = current_view
+    print('')
+    
+    
     headset_x = headset_tracking[2][3]
     headset_y = headset_tracking[0][3]
 
@@ -63,7 +81,7 @@ while True:
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
 
-    print(distance2)
+    # print(distance2)
 
     event = openvr.VREvent_t()
     while(openvr.VRSystem().pollNextEvent(event)):
