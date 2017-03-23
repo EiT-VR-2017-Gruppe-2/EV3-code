@@ -77,6 +77,11 @@ yaw2 = (poses[0].mDeviceToAbsoluteTracking)[2][2]
 offset = GetYawValue(yaw1, yaw2)
 previous_view = offset
 
+max_distance = 0.65
+msg_sleep = 0.05
+left_old = 'lstop'
+right_old = 'rstop'
+
 loop = True
 while loop:
     # Keyboard events
@@ -132,7 +137,7 @@ while loop:
     openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
     hmd_pose = poses[openvr.k_unTrackedDeviceIndex_Hmd]
     headset_tracking = poses[0].mDeviceToAbsoluteTracking
-    controller1_tracking = poses[3].mDeviceToAbsoluteTracking
+    controller1_tracking = poses[1].mDeviceToAbsoluteTracking
     controller2_tracking = poses[2].mDeviceToAbsoluteTracking
     yaw1 = headset_tracking[2][0]
     yaw2 = headset_tracking[2][2]
@@ -146,18 +151,21 @@ while loop:
     diff = ((current_view) - (previous_view))
         
     if ((diff < 0.05) and (diff > -0.05)):
-        print('Nothing')
+        #print('Nothing')
+        a=1
     else:
-        print('Changed')
+        #print('Changed')
 
         if diff > 0.0:
             msg = 'cr'
             print(msg)
             s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
         else:
             msg = 'cl'
             print(msg)
             s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
         
         previous_view = current_view
     print('')
@@ -173,6 +181,50 @@ while loop:
 
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
+    print(distance1)
+    if(distance1 > max_distance/2+0.05):
+        msg = 'lfwd'
+        if(msg != left_old):
+            left_old = 'lfwd'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
+    elif(distance1 < max_distance/2-0.05):
+        msg = 'lbwd'
+        if(msg != left_old):
+            left_old = 'lbwd'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
+    else:
+        msg = 'lstop'
+        if(msg != left_old):
+            left_old = 'lstop'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
+
+    if(distance2 > max_distance/2+0.05):
+        msg = 'rfwd'
+        if(msg != right_old):
+            right_old = 'rfwd'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
+    elif(distance2 < max_distance/2-0.05):
+        msg = 'rbwd'
+        if(msg != right_old):
+            right_old = 'rbwd'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
+    else:
+        msg = 'rstop'
+        if(msg != right_old):
+            right_old = 'rstop'
+            print(msg)
+            s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
 
     event = openvr.VREvent_t()
     while(openvr.VRSystem().pollNextEvent(event)):
@@ -181,6 +233,7 @@ while loop:
             msg = 'claw'
             print(msg)
             s.send(msg.encode('utf-8'))
+            time.sleep(msg_sleep)
     
     sys.stdout.flush()
     time.sleep(0.2)

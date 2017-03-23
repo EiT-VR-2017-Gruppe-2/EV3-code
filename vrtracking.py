@@ -39,6 +39,18 @@ yaw2 = (poses[0].mDeviceToAbsoluteTracking)[2][2]
 offset = GetYawValue(yaw1, yaw2)
 previous_view = offset
 
+hmd_index = -1
+left_controller_index = -1
+right_controller_index = -1
+for i in range(openvr.k_unMaxTrackedDeviceCount):
+    device_class = openvr.VRSystem().getTrackedDeviceClass(0)
+    if(device_class == openvr.TrackedDeviceClass_HMD):
+        hmd_index = i
+    #elif(device_class == openvr.TrackedDevic
+
+print('hmd:', hmd_index)
+        
+
 while True:
     openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
     hmd_pose = poses[openvr.k_unTrackedDeviceIndex_Hmd]
@@ -56,17 +68,20 @@ while True:
     diff = ((current_view) - (previous_view))
         
     if ((diff < 0.05) and (diff > -0.05)):
-        print('Nothing')
+        #print('Nothing')
+        a = 1
     else:
-        print('Changed')
-
+        #print('Changed')
+        a=1
         if diff > 0.0:
-            print('Right')
+            #print('Right')
+            a=1
         else:
-            print('Left')
+            #print('Left')
+            a=1
         
         previous_view = current_view
-    print('')
+    #print('')
     
     
     headset_x = headset_tracking[2][3]
@@ -78,10 +93,23 @@ while True:
     controller2_x = controller2_tracking[2][3]
     controller2_y = controller2_tracking[0][3]
 
+    max_distance = 0.65
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
 
-    # print(distance2)
+    if(distance1 > max_distance/2+0.05):
+        print('left fwd')
+    elif(distance1 < max_distance/2-0.05):
+        print('left bckw')
+    else:
+        print('left stop')
+
+    if(distance2 > max_distance/2+0.05):
+        print('right fwd')
+    elif(distance2 < max_distance/2-0.05):
+        print('right bckw')
+    else:
+        print('right stop')
 
     event = openvr.VREvent_t()
     while(openvr.VRSystem().pollNextEvent(event)):
