@@ -92,44 +92,52 @@ while loop:
             if event.key == pygame.K_ESCAPE:
                 loop = False
             elif event.key == pygame.K_UP:
-                msg = 'fwd'
+                msg = 'm'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_DOWN:
-                msg = 'bwd'
+                msg = 'n'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_LEFT:
-                msg = 'left'
+                msg = 'b'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_RIGHT:
-                msg = 'right'
+                msg = 'v'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_LSHIFT:
-                msg = 'open'
+                msg = '1'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_LCTRL:
-                msg = 'close'
+                msg = '2'
+                print(msg)
+                s.send(msg.encode('utf-8'))
+            elif event.key == pygame.K_c:
+                msg = 'c'
+                print(msg)
+                s.send(msg.encode('utf-8'))
+            elif event.key == pygame.K_x:
+                msg = 'x'
                 print(msg)
                 s.send(msg.encode('utf-8'))
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
-                msg = 'stop'
+                msg = 'g'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_DOWN:
-                msg = 'stop'
+                msg = 'g'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_LEFT:
-                msg = 'stop'
+                msg = 'g'
                 print(msg)
                 s.send(msg.encode('utf-8'))
             elif event.key == pygame.K_RIGHT:
-                msg = 'stop'
+                msg = 'g'
                 print(msg)
                 s.send(msg.encode('utf-8'))
 
@@ -137,8 +145,8 @@ while loop:
     openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
     hmd_pose = poses[openvr.k_unTrackedDeviceIndex_Hmd]
     headset_tracking = poses[0].mDeviceToAbsoluteTracking
-    controller1_tracking = poses[1].mDeviceToAbsoluteTracking
-    controller2_tracking = poses[2].mDeviceToAbsoluteTracking
+    controller1_tracking = poses[4].mDeviceToAbsoluteTracking
+    controller2_tracking = poses[3].mDeviceToAbsoluteTracking
     yaw1 = headset_tracking[2][0]
     yaw2 = headset_tracking[2][2]
     yaw_value = GetYawValue(yaw1,yaw2)
@@ -148,8 +156,7 @@ while loop:
 
     current_view = GetOffsetYawValue(yaw_value, offset)
 
-    diff = ((current_view) - (previous_view))
-        
+    diff = ((current_view) - (previous_view))       
     if ((diff < 0.05) and (diff > -0.05)):
         #print('Nothing')
         a=1
@@ -157,19 +164,19 @@ while loop:
         #print('Changed')
 
         if diff > 0.0:
-            msg = 'cr'
+            msg = 'c'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
         else:
-            msg = 'cl'
+            msg = 'x'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
         
         previous_view = current_view
     print('')
-
+    
     headset_x = headset_tracking[2][3]
     headset_y = headset_tracking[0][3]
 
@@ -182,46 +189,46 @@ while loop:
     distance1 = GetDistance(headset_x, headset_y, controller1_x, controller1_y)
     distance2 = GetDistance(headset_x, headset_y, controller2_x, controller2_y)
     print(distance1)
-    if(distance1 > max_distance/2+0.05):
-        msg = 'lfwd'
+    if(distance1 > max_distance/2+0.15):
+        msg = 'l'
         if(msg != left_old):
-            left_old = 'lfwd'
+            left_old = 'l'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
-    elif(distance1 < max_distance/2-0.05):
-        msg = 'lbwd'
+    elif(distance1 < max_distance/2-0.1):
+        msg = 'j'
         if(msg != left_old):
-            left_old = 'lbwd'
+            left_old = 'j'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
     else:
-        msg = 'lstop'
+        msg = 'k'
         if(msg != left_old):
-            left_old = 'lstop'
+            left_old = 'k'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
 
-    if(distance2 > max_distance/2+0.05):
-        msg = 'rfwd'
+    if(distance2 > max_distance/2+0.1):
+        msg = 'r'
         if(msg != right_old):
-            right_old = 'rfwd'
+            right_old = 'r'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
-    elif(distance2 < max_distance/2-0.05):
-        msg = 'rbwd'
+    elif(distance2 < max_distance/2-0.1):
+        msg = 'w'
         if(msg != right_old):
-            right_old = 'rbwd'
+            right_old = 'w'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
     else:
-        msg = 'rstop'
+        msg = 'e'
         if(msg != right_old):
-            right_old = 'rstop'
+            right_old = 'e'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
@@ -230,11 +237,11 @@ while loop:
     while(openvr.VRSystem().pollNextEvent(event)):
         t = event.eventType
         if (t == openvr.VREvent_ButtonPress and event.data.controller.button == openvr.k_EButton_SteamVR_Trigger):
-            msg = 'claw'
+            msg = 'z'
             print(msg)
             s.send(msg.encode('utf-8'))
             time.sleep(msg_sleep)
-    
+  
     sys.stdout.flush()
     time.sleep(0.2)
 
