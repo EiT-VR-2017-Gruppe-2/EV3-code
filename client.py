@@ -140,7 +140,7 @@ while loop:
                 msg = 'g'
                 print(msg)
                 s.send(msg.encode('utf-8'))
-
+    
     #VR events
     openvr.VRCompositor().waitGetPoses(poses, len(poses), None, 0)
     hmd_pose = poses[openvr.k_unTrackedDeviceIndex_Hmd]
@@ -244,7 +244,7 @@ while loop:
   
     sys.stdout.flush()
     time.sleep(0.2)
-
+    
     
     '''
     msg = input('Enter a command: ')
